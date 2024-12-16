@@ -21,3 +21,5 @@ The App is available in:
 [WRITE-DOMAIN-HERE]
 
 STEPS TO INSTALL:
+
+Some steps here
