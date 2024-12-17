@@ -24,6 +24,10 @@ export default function ArticleCard({ article }) {
 
                     </CardText>
                     <Button color="primary" className="font-weight-bold">
+                        Open
+                    </Button>
+                    <> </>
+                    <Button color="primary" className="font-weight-bold">
                         <i className="fa-regular fa-pen-to-square"></i>
                     </Button>
                     <> </>
