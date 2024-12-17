@@ -47,6 +47,12 @@ export default function ArticleDetails() {
                     >
                         {article[0].body}
                     </CardText>
+                    <CardText
+                        className="text-secondary mb-4"
+                        style={{ fontSize: "0.75rem" }}
+                    >
+                        {article[0].comment_count} Comments
+                    </CardText>
                 </CardBody>
             </Card>
         </>
