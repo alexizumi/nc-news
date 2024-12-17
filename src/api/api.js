@@ -21,6 +21,5 @@ const getArticleDetails = (articleId) => {
             console.log('Error fetching article')
         })
 }
-
 export { getAllArticles, getArticleDetails };
 
