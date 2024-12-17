@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
-const BANNER = "https://i.imgur.com/CaKdFMq.jpg";
 
 export default function ArticleCard({ article }) {
     return (
