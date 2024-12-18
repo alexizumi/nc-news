@@ -1,16 +1,11 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle, Col } from "reactstrap";
+import { Link } from 'react-router-dom';
+import { Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from "reactstrap";
 
 export default function ArticleCard({ article }) {
-    const navigateTo = useNavigate();
-
-    const handleOpenArticle = (article_id) => {
-        navigateTo(`/articles/${article_id}`);
-    }
     return (
         <>
-            <Col sm='6'>
+            <li className='articles-grid'>
                 <Card>
                     <CardImg top width="100%" src={article.article_img_url} alt="banner" />
                     <CardBody>
@@ -32,20 +27,20 @@ export default function ArticleCard({ article }) {
                             Created by: {article.author} on {article.created_at}
 
                         </CardText>
-                        <Button color="primary" className="font-weight-bold" onClick={() => handleOpenArticle(article.article_id)}>
-                            Open
-                        </Button>
+                        <Link to={`/articles/${article.article_id}`}>
+                            <i className="fa-regular fa-eye"></i>
+                        </Link>
                         <> </>
-                        <Button color="primary" className="font-weight-bold">
+                        <Link>
                             <i className="fa-regular fa-pen-to-square"></i>
-                        </Button>
+                        </Link>
                         <> </>
-                        <Button color="danger" className="font-weight-bold">
-                            <i className="fa-regular fa-trash-can"></i>
-                        </Button>
+                        <Link>
+                            <i className="fa-regular fa-trash-can" alt="delete article"></i>
+                        </Link>
                     </CardBody>
                 </Card>
-            </Col>
+            </li>
 
         </>
     )

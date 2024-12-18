@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
-import { getArticleDetails } from '../api/api';
+import { getArticleDetails, getCommentsByArticle } from '../api/api';
+import CommentsList from './CommentsList';
 import Loading from './Loading';
 
 export default function ArticleDetails() {
     const { article_id } = useParams();
     const [article, setArticle] = useState([]);
+    const [comments, setComments] = useState()
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -16,6 +18,10 @@ export default function ArticleDetails() {
         getArticleDetails(article_id)
             .then((article) => {
                 setArticle(article);
+            })
+        getCommentsByArticle(article_id)
+            .then((comments) => {
+                setComments(comments);
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -23,6 +29,7 @@ export default function ArticleDetails() {
                 setError(true);
             })
     }, []);
+
     if (isLoading) return <Loading />;
 
     if (error) return <Error error={error} />;
@@ -47,6 +54,13 @@ export default function ArticleDetails() {
                     >
                         {article[0].body}
                     </CardText>
+                    <CardText
+                        className="text-secondary mb-4"
+                        style={{ fontSize: "0.75rem" }}
+                    >
+                        {article[0].comment_count} Comments
+                    </CardText>
+                    <CommentsList comments={comments} />
                 </CardBody>
             </Card>
         </>

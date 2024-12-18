@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 }
+
+.loading-container {
+  display: flex;          
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 100vh;
+}
+
+.loading-container h2 {
+  margin-bottom: 20px; 
+  text-align: center;
+}
+
+.articles-grid {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px; 
+  justify-content: space-between;
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+}
+
+.articles-grid > li {
+  flex: 1 1 calc(33.33% - 20px);
+  max-width: calc(33.33% - 20px);
+  box-sizing: border-box;
+}
