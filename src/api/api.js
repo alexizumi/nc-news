@@ -21,5 +21,10 @@ const getArticleDetails = (articleId) => {
             console.log('Error fetching article')
         })
 }
-export { getAllArticles, getArticleDetails };
+const getCommentsByArticle = (articleId) => {
+    return api.get(`/articles/${articleId}/comments`)
+        .then(({ data }) => data)
+}
+
+export { getAllArticles, getArticleDetails, getCommentsByArticle };
 
