@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { CardTitle } from 'reactstrap';
 import { getCommentsByArticle } from '../api/api';
 import CommentCard from './CommentCard';
+import ErrorComponent from './ErrorComponent';
 import Loading from './Loading';
 
 export default function CommentsList() {
     const { article_id } = useParams();
-    console.log(article_id, 'article id in CommentsList')
     const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -17,8 +17,6 @@ export default function CommentsList() {
         setIsLoading(true);
         getCommentsByArticle(article_id)
             .then((comments) => {
-                console.log(comments, 'Comments in CommentList')
-
                 setComments(comments);
                 setIsLoading(false);
             })
@@ -29,9 +27,9 @@ export default function CommentsList() {
     }, []);
 
     if (isLoading) return <Loading />;
-
-    if (error) return <Error error={error} />;
+    if (error) return <ErrorComponent message={error} />;
     return (
+
         <ul>
             <CardTitle className="h4 mb-2 pt-2 font-weight-bold text-secondary">Comments</CardTitle>
             {comments.map((comment) => {
@@ -40,5 +38,6 @@ export default function CommentsList() {
                 )
             })}
         </ul>
+
     )
 }
