@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
 import { getArticleDetails, getCommentsByArticle } from '../api/api';
 import CommentsList from './CommentsList';
+import ErrorComponent from './ErrorComponent';
 import Loading from './Loading';
 
 export default function ArticleDetails() {
@@ -32,7 +33,7 @@ export default function ArticleDetails() {
 
     if (isLoading) return <Loading />;
 
-    if (error) return <Error error={error} />;
+    if (error) return <ErrorComponent message={error.message} />;
 
     return (
         <>
