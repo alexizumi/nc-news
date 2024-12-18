@@ -19,21 +19,23 @@ export default function ArticleDetails() {
         getArticleDetails(article_id)
             .then((article) => {
                 setArticle(article);
-            })
-        getCommentsByArticle(article_id)
-            .then((comments) => {
-                setComments(comments);
+                if (article.comment_count > 0) {
+                    getCommentsByArticle(article_id)
+                        .then((comments) => {
+                            setComments(comments);
+                        })
+                }
                 setIsLoading(false);
             })
             .catch((err) => {
                 setIsLoading(false);
-                setError(true);
+                setError('Error fetching articles or comments');
             })
     }, []);
 
     if (isLoading) return <Loading />;
 
-    if (error) return <ErrorComponent message={error.message} />;
+    if (error) return <ErrorComponent message={error} />;
 
     return (
         <>
@@ -61,7 +63,8 @@ export default function ArticleDetails() {
                     >
                         {article[0].comment_count} Comments
                     </CardText>
-                    <CommentsList comments={comments} />
+                    {article[0].comment_count > 0 ? (<CommentsList comments={comments} />) : null}
+
                 </CardBody>
             </Card>
         </>

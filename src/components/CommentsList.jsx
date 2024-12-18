@@ -17,8 +17,6 @@ export default function CommentsList() {
         setIsLoading(true);
         getCommentsByArticle(article_id)
             .then((comments) => {
-                console.log(comments, 'Comments in CommentList')
-
                 setComments(comments);
                 setIsLoading(false);
             })
@@ -29,8 +27,7 @@ export default function CommentsList() {
     }, []);
 
     if (isLoading) return <Loading />;
-
-    if (error) return <ErrorComponent message={error.message} />;
+    if (error) return <ErrorComponent message={error} />;
     return (
 
         <ul>
