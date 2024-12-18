@@ -29,8 +29,7 @@ export default function ArticleDetails() {
                 setError(true);
             })
     }, []);
-    console.log(article, '<<< article details');
-    console.log(comments, '<<< comments')
+
     if (isLoading) return <Loading />;
 
     if (error) return <Error error={error} />;
