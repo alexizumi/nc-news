@@ -1,13 +1,8 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle, Col } from "reactstrap";
 
 export default function ArticleCard({ article }) {
-    const navigateTo = useNavigate();
-
-    const handleOpenArticle = (article_id) => {
-        navigateTo(`/articles/${article_id}`);
-    }
     return (
         <>
             <Col sm='6'>
@@ -32,9 +27,11 @@ export default function ArticleCard({ article }) {
                             Created by: {article.author} on {article.created_at}
 
                         </CardText>
-                        <Button color="primary" className="font-weight-bold" onClick={() => handleOpenArticle(article.article_id)}>
-                            Open
-                        </Button>
+                        <Link to={`/articles/${article.article_id}`}>
+                            <Button color="primary" className="font-weight-bold">
+                                Open
+                            </Button>
+                        </Link>
                         <> </>
                         <Button color="primary" className="font-weight-bold">
                             <i className="fa-regular fa-pen-to-square"></i>
@@ -45,7 +42,7 @@ export default function ArticleCard({ article }) {
                         </Button>
                     </CardBody>
                 </Card>
-            </Col>
+            </Col >
 
         </>
     )
