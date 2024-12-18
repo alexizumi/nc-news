@@ -30,7 +30,7 @@ export default function ArticlesList() {
   return (
     <>
       <h2>ArticlesList</h2>
-      <ul>
+      <ul className='articles-grid'>
         {articles.map((article) => {
           return (
             <ArticleCard article={article} key={article.article_id} />

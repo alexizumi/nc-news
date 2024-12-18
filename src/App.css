@@ -54,3 +54,19 @@
   margin-bottom: 20px; 
   text-align: center;
 }
+
+.articles-grid {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px; 
+  justify-content: space-between;
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+}
+
+.articles-grid > li {
+  flex: 1 1 calc(33.33% - 20px);
+  max-width: calc(33.33% - 20px);
+  box-sizing: border-box;
+}
