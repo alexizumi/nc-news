@@ -8,17 +8,11 @@ const getAllArticles = () => {
         .then(({ data }) => {
             return data;
         })
-        .catch((error) => {
-            console.log('Error fetching articles')
-        });
 }
 const getArticleDetails = (articleId) => {
     return api.get(`/articles/${articleId}`)
         .then(({ data }) => {
             return data;
-        })
-        .catch((error) => {
-            console.log('Error fetching article')
         })
 }
 const getCommentsByArticle = (articleId) => {

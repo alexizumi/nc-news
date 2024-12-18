@@ -19,7 +19,7 @@ export default function ArticlesList() {
       })
       .catch((err) => {
         setIsLoading(false);
-        setError(err);
+        setError('Error fetching articles');
       });
   }, []);
 
