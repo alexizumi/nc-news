@@ -5,6 +5,7 @@ import { getArticleDetails, getCommentsByArticle } from '../api/api';
 import CommentsList from './CommentsList';
 import ErrorComponent from './ErrorComponent';
 import Loading from './Loading';
+import Votes from './Votes';
 
 export default function ArticleDetails() {
     const { article_id } = useParams();
@@ -60,12 +61,10 @@ export default function ArticleDetails() {
                     </CardText>
                 </CardBody>
                 <CardBody>
-                    <CardLink
-                        className="text-secondary mb-4"
-                        style={{ fontSize: "0.75rem" }}
-                    >
-                        {article[0].votes} Votes {' - '}
+                    <Votes article_id={article_id} votes={article[0].votes} />
 
+                    <CardLink className="text-secondary mb-4"
+                        style={{ fontSize: "0.75rem" }}>
                         {article[0].comment_count} Comments
                     </CardLink>
                     {article[0].comment_count > 0 ? (
@@ -73,7 +72,7 @@ export default function ArticleDetails() {
                     ) : null}
 
                 </CardBody>
-            </Card>
+            </Card >
         </>
     )
 }

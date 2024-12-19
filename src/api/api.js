@@ -19,6 +19,16 @@ const getCommentsByArticle = (articleId) => {
     return api.get(`/articles/${articleId}/comments`)
         .then(({ data }) => data)
 }
+const patchVotesByArticle = (article_id, incVotes) => {
+    // articleId = 34;
+    // incVotes = { inc_votes: 1 }
+    console.log(article_id, incVotes, 'API')
+    return api.patch(`/articles/${article_id}`, incVotes)
+        .then(({ data }) => {
+            console.log(data)
+            return data;
+        })
+};
 
-export { getAllArticles, getArticleDetails, getCommentsByArticle };
+export { getAllArticles, getArticleDetails, getCommentsByArticle, patchVotesByArticle };
 
