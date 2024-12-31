@@ -1,4 +1,7 @@
+// /src/components/ArticlesList.jsx
+
 import React, { useEffect, useState } from 'react';
+import { CardTitle } from 'reactstrap';
 import { getAllArticles } from '../api/api';
 import ArticleCard from './ArticleCard';
 import Loading from './Loading';
@@ -29,7 +32,10 @@ export default function ArticlesList() {
 
   return (
     <>
-      <h2>ArticlesList</h2>
+      <br />
+      <CardTitle className="h1 mb-2 pt-2 font-weight-bold text-secondary">Articles</CardTitle>
+      <br />
+      <br />
       <ul className='articles-grid'>
         {articles.map((article) => {
           return (

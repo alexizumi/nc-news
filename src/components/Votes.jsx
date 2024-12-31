@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Button, CardLink } from 'reactstrap';
 import { patchVotesByArticle } from '../api/api';
+import ErrorComponent from './ErrorComponent';
 
 export default function Votes({ article_id, votes }) {
     const [votesCount, setVotesCount] = useState(0)
+    const [error, setError] = useState(null);
+    const [hasVoted, setHasVoted] = useState(null)
 
     useEffect(() => {
-        console.log(votes, article_id, 'Votes and ID')
         setVotesCount(votes);
     }, [votes, article_id]);
 
     const handleVotes = (value) => {
         const incVotes = { inc_votes: value };
-        console.log('incVotes = ', incVotes, 'article_id = ', article_id)
+
         setVotesCount((currentVotesCount) => currentVotesCount + value);
-        console.log(article_id, '<<< article_id in handleVotes')
         patchVotesByArticle(article_id, incVotes)
             .then((response) => {
                 return response;
+            }).catch((error) => {
+                setVotesCount((currentVotesCount) => currentVotesCount - value)
+                setError("Your vote was not successful. Please try again")
             })
     }
+    if (error) return <ErrorComponent message={error} />;
     return (
         <>
             <CardLink onClick={() => handleVotes(1)}>
@@ -31,6 +36,7 @@ export default function Votes({ article_id, votes }) {
                 <Button>
                     <i className="fa-regular fa-thumbs-down"></i>
                 </Button>
+                {error ? <p>{error}</p> : null}
             </CardLink>
             <CardLink
                 className="text-secondary mb-4"

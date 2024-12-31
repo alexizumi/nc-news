@@ -1,8 +1,10 @@
 import React from 'react'
 import { Card, ListGroup } from 'reactstrap'
+import DateConverter from '../utils/DateConverter'
 
 export default function
     ({ comment }) {
+
     return (
         <div>
             <Card>
@@ -10,7 +12,7 @@ export default function
                     {comment.body}
                     <br />
                     <br />
-                    Created by {comment.author} at {comment.created_at}
+                    Created by {comment.author} at {DateConverter(comment.created_at)}
                 </ListGroup>
             </Card>
         </div>

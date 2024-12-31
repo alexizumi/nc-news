@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardBody, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
 import { getArticleDetails, getCommentsByArticle } from '../api/api';
+import CommentForm from './CommentForm';
 import CommentsList from './CommentsList';
 import ErrorComponent from './ErrorComponent';
 import Loading from './Loading';
@@ -10,7 +11,7 @@ import Votes from './Votes';
 export default function ArticleDetails() {
     const { article_id } = useParams();
     const [article, setArticle] = useState([]);
-    const [comments, setComments] = useState()
+    const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -33,6 +34,10 @@ export default function ArticleDetails() {
                 setError('Error fetching articles or comments');
             })
     }, []);
+
+    const handleCommentAdded = (newComment) => {
+        setComments((prevComments) => [newComment, ...prevComments]);
+    };
 
     if (isLoading) return <Loading />;
 
@@ -62,11 +67,11 @@ export default function ArticleDetails() {
                 </CardBody>
                 <CardBody>
                     <Votes article_id={article_id} votes={article[0].votes} />
-
                     <CardLink className="text-secondary mb-4"
                         style={{ fontSize: "0.75rem" }}>
                         {article[0].comment_count} Comments
                     </CardLink>
+                    <CommentForm articleId={article_id} onCommentAdded={handleCommentAdded} />
                     {article[0].comment_count > 0 ? (
                         <CommentsList comments={comments} />
                     ) : null}
