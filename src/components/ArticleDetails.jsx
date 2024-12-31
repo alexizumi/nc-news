@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap";
+import { Card, CardBody, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
 import { getArticleDetails, getCommentsByArticle } from '../api/api';
+import CommentForm from './CommentForm';
 import CommentsList from './CommentsList';
 import ErrorComponent from './ErrorComponent';
 import Loading from './Loading';
+import Votes from './Votes';
 
 export default function ArticleDetails() {
     const { article_id } = useParams();
     const [article, setArticle] = useState([]);
-    const [comments, setComments] = useState()
+    const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -33,6 +35,10 @@ export default function ArticleDetails() {
             })
     }, []);
 
+    const handleCommentAdded = (newComment) => {
+        setComments((prevComments) => [newComment, ...prevComments]);
+    };
+
     if (isLoading) return <Loading />;
 
     if (error) return <ErrorComponent message={error} />;
@@ -45,6 +51,7 @@ export default function ArticleDetails() {
                     <CardTitle className="h3 mb-2 pt-2 font-weight-bold text-secondary">
                         {article[0].title}
                     </CardTitle>
+
                     <CardText
                         className="text-secondary mb-4"
                         style={{ fontSize: "0.75rem" }}
@@ -57,16 +64,20 @@ export default function ArticleDetails() {
                     >
                         {article[0].body}
                     </CardText>
-                    <CardText
-                        className="text-secondary mb-4"
-                        style={{ fontSize: "0.75rem" }}
-                    >
+                </CardBody>
+                <CardBody>
+                    <Votes article_id={article_id} votes={article[0].votes} />
+                    <CardLink className="text-secondary mb-4"
+                        style={{ fontSize: "0.75rem" }}>
                         {article[0].comment_count} Comments
-                    </CardText>
-                    {article[0].comment_count > 0 ? (<CommentsList comments={comments} />) : null}
+                    </CardLink>
+                    <CommentForm articleId={article_id} onCommentAdded={handleCommentAdded} />
+                    {article[0].comment_count > 0 ? (
+                        <CommentsList comments={comments} />
+                    ) : null}
 
                 </CardBody>
-            </Card>
+            </Card >
         </>
     )
 }

@@ -1,21 +1,19 @@
 import React from 'react'
-import { Card, CardText } from 'reactstrap'
+import { Card, ListGroup } from 'reactstrap'
+import DateConverter from '../utils/DateConverter'
 
 export default function
     ({ comment }) {
+
     return (
         <div>
             <Card>
-                <CardText className="text-secondary mb-4"
-                    style={{ fontSize: "1rem" }}>
+                <ListGroup variant="flush" className="text-secondary mb-4" style={{ fontSize: "0.75rem" }}>
                     {comment.body}
-                </CardText>
-                <CardText
-                    className="text-secondary mb-4"
-                    style={{ fontSize: "0.75rem" }}
-                >
-                    Created by {comment.author} at {comment.created_at}
-                </CardText>
+                    <br />
+                    <br />
+                    Created by {comment.author} at {DateConverter(comment.created_at)}
+                </ListGroup>
             </Card>
         </div>
     )

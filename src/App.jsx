@@ -1,15 +1,17 @@
+// /App.jsx
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import ArticleDetails from './components/ArticleDetails';
 import ArticlesList from './components/ArticlesList';
 import CommentsList from './components/CommentsList';
+import Header from './components/Header';
 import Home from './components/Home';
 
 function App() {
 
   return (
     <>
-      <h1>My NC News</h1>
+      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/articles/:article_id' element={<ArticleDetails />} />

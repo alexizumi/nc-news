@@ -1,3 +1,5 @@
+// /src/api/api.js
+
 import axios from 'axios';
 const temp = 'http://127.0.0.1:9090/api';
 
@@ -8,23 +10,40 @@ const getAllArticles = () => {
         .then(({ data }) => {
             return data;
         })
-        .catch((error) => {
-            console.log('Error fetching articles')
-        });
 }
 const getArticleDetails = (articleId) => {
     return api.get(`/articles/${articleId}`)
         .then(({ data }) => {
             return data;
         })
-        .catch((error) => {
-            console.log('Error fetching article')
-        })
 }
 const getCommentsByArticle = (articleId) => {
     return api.get(`/articles/${articleId}/comments`)
         .then(({ data }) => data)
 }
+const patchVotesByArticle = (article_id, incVotes) => {
+    return api.patch(`/articles/${article_id}`, incVotes)
+        .then(({ data }) => {
+            return data;
+        })
+};
+const getAllUsers = () => {
+    return api.get(`/users`)
+        .then(({ data }) => {
+            return data;
+        })
+}
+const postNewComment = (articleId, username, body) => {
 
-export { getAllArticles, getArticleDetails, getCommentsByArticle };
+    const newComment = {
+        username: username,
+        body: body,
+    };
+    return api.post(`/articles/${articleId}/comments`, newComment)
+        .then(({ data }) => {
+            return data;
+        })
+}
+
+export { getAllArticles, getAllUsers, getArticleDetails, getCommentsByArticle, patchVotesByArticle, postNewComment };
 
