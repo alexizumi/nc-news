@@ -1,11 +1,21 @@
-import React from 'react'
-import { Card, ListGroup } from 'reactstrap'
-import DateConverter from '../utils/DateConverter'
+// /src/components/CommentCard.jsx
 
-export default function
-    ({ comment }) {
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Card, ListGroup } from 'reactstrap';
+import { UserContext } from '../context/User';
+import DateConverter from '../utils/DateConverter';
+import CommentForm from './CommentForm';
 
-    return (
+export default function CommentCard({ comment, article_id }) {
+    const { user } = useContext(UserContext);
+    const [isEditing, setEditing] = useState(false);
+
+    const handleEditComplete = () => {
+        setEditing(false);
+    };
+
+    const viewTemplate = (
         <div>
             <Card>
                 <ListGroup variant="flush" className="text-secondary mb-4" style={{ fontSize: "0.75rem" }}>
@@ -13,8 +23,31 @@ export default function
                     <br />
                     <br />
                     Created by {comment.author} at {DateConverter(comment.created_at)}
+                    <br />
+                    <br />
+                    {comment.author === user.username ?
+                        <div className="button-container">
+                            <Link onClick={() => setEditing(true)}>
+                                <i className="fa-regular fa-pen-to-square" alt='Edit comment'></i>
+                            </Link>
+                            <Link>
+                                <i className="fa-regular fa-trash-can" alt="delete comment"></i>
+                            </Link></div>
+                        : null}
                 </ListGroup>
             </Card>
         </div>
+    );
+
+    return (
+        <>
+            {isEditing ? (
+                <CommentForm
+                    articleId={article_id}
+                    initialComment={comment.body}
+                    onEditComplete={handleEditComplete}
+                />)
+                : viewTemplate}
+        </>
     )
 }

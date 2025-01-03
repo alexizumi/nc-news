@@ -34,7 +34,7 @@ export default function CommentsList() {
             <CardTitle className="h4 mb-2 pt-2 font-weight-bold text-secondary">Comments</CardTitle>
             {comments.map((comment) => {
                 return (
-                    <CommentCard comment={comment} key={comment.comment_id} />
+                    <CommentCard comment={comment} key={comment.comment_id} article_id={article_id} />
                 )
             })}
         </ul>

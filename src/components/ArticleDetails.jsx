@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardBody, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
 import { getArticleDetails, getCommentsByArticle } from '../api/api';
+import { UserContext } from '../context/User';
 import CommentForm from './CommentForm';
 import CommentsList from './CommentsList';
 import ErrorComponent from './ErrorComponent';
@@ -14,6 +15,7 @@ export default function ArticleDetails() {
     const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         setError(null);

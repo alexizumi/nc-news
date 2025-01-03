@@ -8,7 +8,9 @@ export default function ArticleCard({ article }) {
         <>
             <li className='articles-grid'>
                 <Card>
-                    <CardImg top width="100%" src={article.article_img_url} alt="banner" />
+                    <Link to={`/articles/${article.article_id}`}>
+                        <CardImg top width="100%" src={article.article_img_url} alt="banner" />
+                    </Link>
                     <CardBody>
                         <CardTitle className="h5 mb-2 pt-2 font-weight-bold text-secondary">
                             <Link to={`/articles/${article.article_id}`}>
