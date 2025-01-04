@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardBody, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
 import { getArticleDetails, getCommentsByArticle } from '../api/api';
+import { UserContext } from '../context/User';
 import CommentForm from './CommentForm';
 import CommentsList from './CommentsList';
 import ErrorComponent from './ErrorComponent';
@@ -14,6 +15,7 @@ export default function ArticleDetails() {
     const [comments, setComments] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         setError(null);
@@ -37,6 +39,20 @@ export default function ArticleDetails() {
 
     const handleCommentAdded = (newComment) => {
         setComments((prevComments) => [newComment, ...prevComments]);
+    };
+
+    const handleCommentDelete = (commentId) => {
+        setComments((prevComments) =>
+            prevComments.filter((comment) => comment.comment_id !== commentId)
+        );
+    };
+
+    const handleCommentEdit = (updatedComment) => {
+        setComments((prevComments) =>
+            prevComments.map((comment) =>
+                comment.comment_id === updatedComment.comment_id ? updatedComment : comment
+            )
+        );
     };
 
     if (isLoading) return <Loading />;
@@ -73,7 +89,11 @@ export default function ArticleDetails() {
                     </CardLink>
                     <CommentForm articleId={article_id} onCommentAdded={handleCommentAdded} />
                     {article[0].comment_count > 0 ? (
-                        <CommentsList comments={comments} />
+                        <CommentsList
+                            initialComments={comments}
+                            onCommentDelete={handleCommentDelete}
+                            onCommentEdit={handleCommentEdit}
+                        />
                     ) : null}
 
                 </CardBody>

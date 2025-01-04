@@ -1,34 +1,47 @@
 // /src/components/CommentForm.jsx
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Alert, Button, Form } from "react-bootstrap";
 import { postNewComment } from '../api/api';
 import { UserContext } from '../context/User';
 
-const CommentForm = ({ articleId, onCommentAdded }) => {
+const CommentForm = ({ articleId, initialComment = '', onEditComplete, onCommentAdded }) => {
     const { user } = useContext(UserContext);
-    const [comment, setComment] = useState('');
+    const [comment, setComment] = useState(initialComment);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        setComment(initialComment);
+    }, [initialComment]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!comment.trim()) return;
-
         setIsSubmitting(true);
         setError(null);
 
         postNewComment(articleId, user.username, comment.trim())
-            .then((newComment) => {
+            .then(newComment => {
                 setComment('');
                 if (onCommentAdded) {
-                    onCommentAdded(newComment.comment);
+                    onCommentAdded(newComment);
                 }
-                setIsSubmitting(false);
+                if (onEditComplete) {
+                    onEditComplete(newComment);
+                }
             })
-            .catch((err) => {
+            .catch(err => {
                 setError('Error submitting your comment. Please try again');
+            })
+            .finally(() => {
                 setIsSubmitting(false);
             });
+    };
+
+    const handleCancel = () => {
+        if (onEditComplete) {
+            onEditComplete();
+        }
     };
 
     return (
@@ -46,6 +59,13 @@ const CommentForm = ({ articleId, onCommentAdded }) => {
                 />
                 <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
             </Form.Group>
+            <Button
+                variant="secondary"
+                onClick={handleCancel}
+                disabled={isSubmitting}
+            >
+                Cancel
+            </Button>
             <Button
                 variant="primary"
                 type="submit"
