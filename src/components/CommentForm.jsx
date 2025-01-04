@@ -21,16 +21,19 @@ const CommentForm = ({ articleId, initialComment = '', onEditComplete, onComment
         setError(null);
 
         postNewComment(articleId, user.username, comment.trim())
-            .then(() => {
+            .then(newComment => {
                 setComment('');
-                setIsSubmitting(false);
-                if (onEditComplete) {
-                    onEditComplete();
+                if (onCommentAdded) {
+                    onCommentAdded(newComment);
                 }
-                setIsSubmitting(false);
+                if (onEditComplete) {
+                    onEditComplete(newComment);
+                }
             })
-            .catch((err) => {
+            .catch(err => {
                 setError('Error submitting your comment. Please try again');
+            })
+            .finally(() => {
                 setIsSubmitting(false);
             });
     };

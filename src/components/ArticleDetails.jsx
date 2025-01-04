@@ -41,6 +41,20 @@ export default function ArticleDetails() {
         setComments((prevComments) => [newComment, ...prevComments]);
     };
 
+    const handleCommentDelete = (commentId) => {
+        setComments((prevComments) =>
+            prevComments.filter((comment) => comment.comment_id !== commentId)
+        );
+    };
+
+    const handleCommentEdit = (updatedComment) => {
+        setComments((prevComments) =>
+            prevComments.map((comment) =>
+                comment.comment_id === updatedComment.comment_id ? updatedComment : comment
+            )
+        );
+    };
+
     if (isLoading) return <Loading />;
 
     if (error) return <ErrorComponent message={error} />;
@@ -75,7 +89,11 @@ export default function ArticleDetails() {
                     </CardLink>
                     <CommentForm articleId={article_id} onCommentAdded={handleCommentAdded} />
                     {article[0].comment_count > 0 ? (
-                        <CommentsList comments={comments} />
+                        <CommentsList
+                            initialComments={comments}
+                            onCommentDelete={handleCommentDelete}
+                            onCommentEdit={handleCommentEdit}
+                        />
                     ) : null}
 
                 </CardBody>
