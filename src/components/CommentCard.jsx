@@ -13,9 +13,14 @@ export default function CommentCard({ comment, article_id, onDelete, onEdit }) {
     const [isEditing, setEditing] = useState(false);
 
     const handleEditComplete = (updatedComment) => {
-        setEditing(false);
-        onEdit(updatedComment);
-        console.log("Updated Comment:", updatedComment);
+        deleteComment(comment.comment_id)
+            .then(() => {
+                setEditing(false);
+                onEdit(updatedComment);
+            })
+            .catch(error => {
+                console.log('Error editing comment: ', error);
+            })
     };
 
     const handleDeleteComment = (commentId) => {
@@ -59,6 +64,7 @@ export default function CommentCard({ comment, article_id, onDelete, onEdit }) {
                     articleId={article_id}
                     initialComment={comment.body}
                     onEditComplete={handleEditComplete}
+                    commentId={comment.comment_id}
                 />)
                 : viewTemplate}
         </>
