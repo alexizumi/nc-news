@@ -23,11 +23,11 @@ const CommentForm = ({ articleId, initialComment = '', onEditComplete, onComment
         postNewComment(articleId, user.username, comment.trim())
             .then(newComment => {
                 setComment('');
-                if (onCommentAdded) {
-                    onCommentAdded(newComment);
-                }
                 if (onEditComplete) {
                     onEditComplete(newComment);
+                }
+                if (onCommentAdded) {
+                    onCommentAdded(newComment);
                 }
             })
             .catch(err => {
